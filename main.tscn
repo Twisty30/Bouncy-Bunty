@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://b3rnb24d8icjt"]
+
+[ext_resource type="Script" uid="uid://cqgmj4jw2nv5m" path="res://player.gd" id="1_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://g2lqgf5mcsa7" path="res://little-bear-walk.png" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://bieh1kq125p1b" path="res://little-bear-idle.png" id="2_h2yge"]
+[ext_resource type="Texture2D" uid="uid://on7dnjx1yohf" path="res://tile_0002.png" id="4_1bvp3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ci7bo"]
+size = Vector2(16, 21.399998)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h2yge"]
+atlas = ExtResource("2_0xm2m")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bvp3"]
+atlas = ExtResource("2_0xm2m")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lquwl"]
+atlas = ExtResource("2_0xm2m")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mycd"]
+atlas = ExtResource("2_0xm2m")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ci7bo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_h2yge")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h2yge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1bvp3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lquwl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mycd")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xt1b8"]
+size = Vector2(1149, 131)
+
+[node name="main" type="Node2D" unique_id=1934763604]
+
+[node name="player" type="CharacterBody2D" parent="." unique_id=1813334811]
+position = Vector2(22, 447)
+script = ExtResource("1_0xm2m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player" unique_id=1203207490]
+position = Vector2(72, 9.5)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_ci7bo")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="player" unique_id=715910662]
+texture_filter = 1
+position = Vector2(69.5, -22.5)
+scale = Vector2(5.34375, 5.34375)
+sprite_frames = SubResource("SpriteFrames_ci7bo")
+animation = &"idle"
+
+[node name="ground" type="StaticBody2D" parent="." unique_id=231438590]
+position = Vector2(13, 566)
+
+[node name="Sprite2D" type="Sprite2D" parent="ground" unique_id=1284276514]
+texture_filter = 1
+texture_repeat = 3
+position = Vector2(0, -47)
+texture = ExtResource("4_1bvp3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground" unique_id=1412211984]
+position = Vector2(565, 11)
+shape = SubResource("RectangleShape2D_xt1b8")
