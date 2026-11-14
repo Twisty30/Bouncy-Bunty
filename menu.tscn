@@ -1,0 +1,89 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://menu.gd" id="1_menu"]
+[ext_resource type="Texture2D" path="res://menu_background.png" id="2_bg"]
+[ext_resource type="FontFile" uid="uid://byry32gvnowph" path="res://fonts/mario/mario_world_pixel.ttf" id="3_font"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Background" type="TextureRect" parent="."]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 317.0
+offset_top = 58.0
+offset_right = 816.0
+offset_bottom = 147.0
+theme_override_colors/font_color = Color(0.48805398, 0.48805404, 0.48805404, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 45
+text = "Bouncy Bunty"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TutorialButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 191.0
+offset_right = 749.0
+offset_bottom = 313.0
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 32
+text = "Tutorial"
+
+[node name="StoryButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 328.0
+offset_right = 749.0
+offset_bottom = 450.0
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 32
+text = "Story Mode"
+
+[node name="TimeTrialButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 464.0
+offset_right = 749.0
+offset_bottom = 586.0
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 32
+text = "Time Trial"
+
+[node name="Submenu" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 384.0
+offset_top = 191.0
+offset_right = 749.0
+offset_bottom = 586.0
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Credit" type="Label" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 620.0
+offset_right = 812.0
+offset_bottom = 640.0
+theme_override_colors/font_color = Color(0.3, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 12
+text = "Art: Kenney.nl   Font: Typeface Mario World Pixel by ripoof (CC BY-NC-ND)"

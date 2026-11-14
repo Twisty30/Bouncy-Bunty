@@ -53,7 +53,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xt1b8"]
-size = Vector2(1149, 131)
+size = Vector2(1152, 131)
 
 [node name="main" type="Node2D" unique_id=1934763604]
 
@@ -78,10 +78,13 @@ position = Vector2(13, 566)
 
 [node name="Sprite2D" type="Sprite2D" parent="ground" unique_id=1284276514]
 texture_filter = 1
-texture_repeat = 3
-position = Vector2(0, -47)
+texture_repeat = 2
+position = Vector2(563, -37)
+scale = Vector2(2.4827588, 2.4444444)
 texture = ExtResource("4_1bvp3")
+region_enabled = true
+region_rect = Rect2(0, 0, 464.16388, 18.490465)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground" unique_id=1412211984]
-position = Vector2(565, 11)
+position = Vector2(563, 11)
 shape = SubResource("RectangleShape2D_xt1b8")
