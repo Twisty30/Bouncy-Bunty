@@ -1,11 +1,5 @@
 extends Node
-## Autoload "Game": controls, which mode is playing, scene changes, saving and sounds.
-##
-## Player 1: W jump, A/D move, S crouch, E interact, Q dash
-## Player 2: Up jump, Left/Right move, Down crouch, Right Shift interact, Ctrl dash
-## Player 3 (controller): left stick move, bottom button jump, left button dash,
-##   top button interact, hold R1/R/RB crouch, right button back.
-## Controller buttons go by position, so PS / Switch / Xbox pads all match.
+## controllers and game stuff
 
 enum Mode { TUTORIAL, TIME_TRIAL, STORY }
 
@@ -21,6 +15,9 @@ var cutscene := "intro"
 var save := ConfigFile.new()
 var sounds := {}
 var speakers: Array = []
+var tracks := {}
+var track := ""
+var music_player := AudioStreamPlayer.new()
 
 
 func _ready() -> void:
@@ -37,6 +34,16 @@ func _ready() -> void:
 	for i in 8:
 		speakers.append(AudioStreamPlayer.new())
 		add_child(speakers[i])
+	for f in DirAccess.get_files_at("res://music"):
+		if f.ends_with(".wav") or f.ends_with(".wav.import"):
+			var n := f.get_basename().get_basename() if f.ends_with(".import") else f.get_basename()
+			var stream: AudioStreamWAV = load("res://music/%s.wav" % n)
+			stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
+			stream.loop_begin = 0
+			stream.loop_end = int(stream.get_length() * stream.mix_rate)
+			tracks[n] = stream
+	music_player.volume_db = -9.0
+	add_child(music_player)
 	_setup_inputs()
 
 
@@ -48,6 +55,47 @@ func sfx(name: String, pitch: float = 1.0) -> void:
 	p.stream = sounds[name]
 	p.pitch_scale = pitch
 	p.play()
+
+
+## Switch background music ("menu", "level", "boss"). Keeps playing if it's already on.
+func music(name: String) -> void:
+	if name == track and music_player.playing:
+		return
+	track = name
+	music_player.stop()
+	if tracks.has(name):
+		music_player.stream = tracks[name]
+		music_player.play()
+
+
+## One-shot puff of square pixel particles (dust, sparkles, confetti). Frees itself.
+func burst(parent: Node, pos: Vector2, amount: int, color: Color, speed: float = 90.0,
+		dir: Vector2 = Vector2.UP, spread: float = 70.0, gravity: float = 300.0,
+		size: float = 4.0, lifetime: float = 0.45) -> void:
+	if parent == null or not parent.is_inside_tree():
+		return
+	var p := CPUParticles2D.new()
+	p.position = pos
+	p.one_shot = true
+	p.explosiveness = 1.0
+	p.amount = amount
+	p.lifetime = lifetime
+	p.direction = dir
+	p.spread = spread
+	p.initial_velocity_min = speed * 0.4
+	p.initial_velocity_max = speed
+	p.gravity = Vector2(0, gravity)
+	p.damping_min = speed * 0.5
+	p.damping_max = speed
+	p.scale_amount_min = size * 0.5
+	p.scale_amount_max = size
+	var fade := Gradient.new()
+	fade.set_color(0, color)
+	fade.set_color(1, Color(color, 0.0))
+	p.color_ramp = fade
+	parent.add_child(p)
+	p.emitting = true
+	get_tree().create_timer(lifetime + 0.3, false).timeout.connect(p.queue_free)
 
 
 func start_tutorial() -> void:
@@ -62,7 +110,7 @@ func start_time_trial() -> void:
 	get_tree().change_scene_to_file("res://level.tscn")
 
 
-## players: 1, 2 (both keyboards) or 3 (+ controller). level < 0 = new story with the intro.
+## player 1 2 3
 func start_story(players: int, level: int = -1) -> void:
 	mode = Mode.STORY
 	player_schemes = [[[1, 2, 3]], [[1], [2]], [[1], [2], [3]]][players - 1]
@@ -120,22 +168,26 @@ func save_distance(meters: int) -> bool:
 	return true
 
 
-# ------------------------------------------------------------ controls
+# controls
 
 func _setup_inputs() -> void:
 	_keys(1, {"left": KEY_A, "right": KEY_D, "jump": KEY_W, "crouch": KEY_S, "interact": KEY_E, "dash": KEY_Q})
 	_keys(2, {"left": KEY_LEFT, "right": KEY_RIGHT, "jump": KEY_UP, "crouch": KEY_DOWN, "interact": KEY_SHIFT, "dash": KEY_CTRL})
 	_axis("p3_left", -1.0)
 	_axis("p3_right", 1.0)
-	_button("p3_jump", JOY_BUTTON_A)                 # Cross / B / A (bottom)
-	_button("p3_dash", JOY_BUTTON_X)                 # Square / Y / X (left)
-	_button("p3_interact", JOY_BUTTON_Y)             # Triangle / X / Y (top)
-	_button("p3_crouch", JOY_BUTTON_RIGHT_SHOULDER)  # R1 / R / RB
-	_button("back", JOY_BUTTON_B)                    # Circle / A / B (right)
+	_button("p3_jump", JOY_BUTTON_A)                 
+	_button("p3_dash", JOY_BUTTON_X)                 
+	_button("p3_interact", JOY_BUTTON_Y)            
+	_button("p3_crouch", JOY_BUTTON_RIGHT_SHOULDER) 
+	_button("back", JOY_BUTTON_B)                    
 	_add_key("back", KEY_ESCAPE)
 	for k in [KEY_ENTER, KEY_SPACE, KEY_W, KEY_UP, KEY_E]:
 		_add_key("next", k)
 	_button("next", JOY_BUTTON_A)
+	# Menu buttons only listen to Godot's built-in ui_accept / ui_cancel, which have
+	# no controller buttons by default. Bottom button = press, right button = back.
+	_button("ui_accept", JOY_BUTTON_A)
+	_button("ui_cancel", JOY_BUTTON_B)
 
 
 func _keys(n: int, map: Dictionary) -> void:

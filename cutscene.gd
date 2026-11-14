@@ -30,6 +30,7 @@ var king: Sprite2D
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color(0.5, 0.85, 0.95) if Game.cutscene == "intro" else Color(0.25, 0.2, 0.35))
 	lines = INTRO if Game.cutscene == "intro" else ENDING
+	Game.music("menu")
 	if Game.player_schemes.size() > 1:
 		lines = lines.map(func(l: Array) -> Array:
 			return [l[0].replace("BUNTY", "BUNTY & FRIENDS"), l[1].replace(" me ", " us ").replace("my watch", "our watch")])
