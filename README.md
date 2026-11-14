@@ -82,5 +82,6 @@ Levels are built in code from reusable pieces (`gap`, `steps`, `mushroom_wall`, 
 - **Art:** [Pixel Platformer](https://kenney.nl/assets/pixel-platformer) by Kenney (CC0)
 - **Font:** [Typeface Mario World Pixel](https://www.fontspace.com/typeface-mario-world-pixel-font-f564478) by ripoof (CC BY-NC-ND, non-commercial use only)
 - **Engine:** [Godot Engine](https://godotengine.org)
+- **Team:** Mahmoud Sami Atta(Mxord), Mohamed Amr(twisty30), and Mujitaba(h6wl)
 
 Because the font's license is non-commercial, the game can't be sold while it uses this font.
