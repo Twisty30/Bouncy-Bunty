@@ -106,8 +106,9 @@ func _ready() -> void:
 	add_child(tag)
 
 
-func die() -> void:
-	if dead or hurt_time > 0.0:
+## force = die even while blinking after a respawn (used when a teammate dies)
+func die(force: bool = false) -> void:
+	if dead or (hurt_time > 0.0 and not force):
 		return
 	dead = true
 	Game.burst(get_parent(), position + Vector2(0, -22), 20, Color(0.82, 0.56, 0.36), 220.0, Vector2.UP, 180.0, 700.0, 6.0, 0.7)

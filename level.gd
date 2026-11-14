@@ -29,6 +29,7 @@ var plates := {}     # id -> list of plate areas
 var doors := {}      # id -> list of door bodies
 var time := 0.0
 var deaths := 0
+var wiping := false   # true while a death is taking the rest of the team down
 var done := false
 
 # juice
@@ -93,7 +94,7 @@ func _ready() -> void:
 		add_child(p)
 		p.sprite.modulate = Game.TINTS[i]
 		p.tag.text = "P%d" % (i + 1) if Game.player_schemes.size() > 1 else ""
-		p.died.connect(func() -> void: deaths += 1)
+		p.died.connect(_on_died.bind(p))
 		players.append(p)
 	_set_spawns()
 	for p in players:
@@ -379,6 +380,18 @@ func _checkpoint(body: Node, pos: Vector2, flag: Sprite2D) -> void:
 		Game.burst(self, flag.global_position, 14, Color(1.0, 0.95, 0.5), 140.0, Vector2.UP, 120.0, 250.0, 4.0, 0.5)
 		_set_spawns()
 		Game.sfx("checkpoint")
+
+
+## In co-op, one bear dying takes the whole team down (counts as one death).
+func _on_died(who: Node) -> void:
+	if wiping:
+		return
+	deaths += 1
+	wiping = true
+	for p in players:
+		if p != who:
+			p.die(true)
+	wiping = false
 
 
 func _set_spawns() -> void:
