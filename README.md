@@ -144,5 +144,6 @@ keeps the original level song). `python tools/make_music.py desert frost` remake
 - **Effects:** [pixelfx](https://github.com/patch-gg/pixelfx) (MIT)
 - **Font:** [Typeface Mario World Pixel](https://www.fontspace.com/typeface-mario-world-pixel-font-f564478) by ripoof (CC BY-NC-ND, non-commercial use only)
 - **Engine:** [Godot Engine](https://godotengine.org)
+- **Team:** Mahmoud Sami Atta (Mxord9000), Mohamed Amr (Twisty30), and Mujitaba (h6wl)
 
 Because the font's license is non-commercial, the game can't be sold while it uses this font.
