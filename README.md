@@ -64,8 +64,8 @@ same toggle is in the pause menu.
 - **Platforms:** moving platforms ride side to side or up and down. Blue fading platforms
   blink before they vanish, and the next one along is always out of step. Orange falling
   platforms shake when you land on them, then drop away and come back later.
-- **Bear Shop:** coins you pick up go into the bank when a level ends (Rush Mode and
-  Bootcamp too). Spend them in **Bear Shop** on the title screen on new fur colours and hats.
+- **Bear Shop:** coins you pick up go into the bank when a level ends (Rush Mode too).
+  Bootcamp only has coins until you finish it once, so it can't be farmed. Spend them in **Bear Shop** on the title screen on new fur colours and hats.
   Point at anything to try it on.
 - **Bosses** telegraph every attack. Most can be made dizzy (Captain Clank by dodging his
   charge so he hits the wall); a dizzy boss takes extra damage.
@@ -134,7 +134,9 @@ godot --path . -- --scene=shop --coins=500 --wear=golden,crown   (try the shop; 
 The effects are sprite sheets rendered from the [pixelfx](https://github.com/patch-gg/pixelfx)
 library. To change the set, copy `tools/build_fx.mjs` into a pixelfx checkout, edit its list
 and run `node build_fx.mjs <this folder>`. `tools/make_sfx.py` and `tools/make_music.py`
-regenerate the extra sound effects and the three new music loops.
+regenerate the extra sound effects and the newer music loops: the title, the final round, and a
+song for each world (Dune Desert, Frost Peaks, Thunder Heights and King's Castle; Bouncy Hills
+keeps the original level song). `python tools/make_music.py desert frost` remakes just those two.
 
 ## Credits
 

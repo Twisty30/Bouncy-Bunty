@@ -29,13 +29,13 @@ extends RefCounted
 const WORLDS := [
 	{"name": "BOUNCY HILLS", "theme": "grass", "music": "level", "pitch": 1.0,
 		"boss": "clank", "color": Color(0.45, 0.85, 0.4)},
-	{"name": "DUNE DESERT", "theme": "sand", "music": "level", "pitch": 0.92,
+	{"name": "DUNE DESERT", "theme": "sand", "music": "desert", "pitch": 1.0,
 		"boss": "drill", "color": Color(1.0, 0.75, 0.35)},
-	{"name": "FROST PEAKS", "theme": "snow", "music": "level", "pitch": 1.08,
+	{"name": "FROST PEAKS", "theme": "snow", "music": "frost", "pitch": 1.0,
 		"boss": "block", "color": Color(0.7, 0.9, 1.0)},
-	{"name": "THUNDER HEIGHTS", "theme": "storm", "music": "night", "pitch": 1.0,
+	{"name": "THUNDER HEIGHTS", "theme": "storm", "music": "storm", "pitch": 1.0,
 		"boss": "flap", "color": Color(0.6, 0.6, 1.0)},
-	{"name": "KING'S CASTLE", "theme": "castle", "music": "night", "pitch": 0.9,
+	{"name": "KING'S CASTLE", "theme": "castle", "music": "castle", "pitch": 1.0,
 		"boss": "king", "color": Color(0.95, 0.4, 0.5)},
 ]
 

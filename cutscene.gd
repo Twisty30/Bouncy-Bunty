@@ -70,7 +70,7 @@ const SCENES := {
 		["wait", 0.4],
 	],
 	"world2": [
-		["bg", "sand"], ["music", "menu", 0.92],
+		["bg", "sand"], ["music", "desert", 1.0],
 		["add", "bunty", "BUNTY", -100, 0, 1, 4.0],
 		["go", "bunty", 380, 0, 1.0],
 		["title", "DUNE DESERT", "WORLD 2", 2.0],
@@ -84,7 +84,7 @@ const SCENES := {
 		["sfx", "dash", 1.0], ["go", "bunty", 1400, 0, 0.8],
 	],
 	"world3": [
-		["bg", "snow"], ["music", "menu", 1.08],
+		["bg", "snow"], ["music", "frost", 1.0],
 		["add", "bunty", "BUNTY", -100, 0, 1, 4.0],
 		["go", "bunty", 400, 0, 1.0],
 		["title", "FROST PEAKS", "WORLD 3", 2.0],
@@ -98,7 +98,7 @@ const SCENES := {
 		["sfx", "dash", 1.0], ["go", "bunty", 1400, 0, 0.9],
 	],
 	"world4": [
-		["bg", "storm"], ["music", "night", 1.0],
+		["bg", "storm"], ["music", "storm", 1.0],
 		["add", "bunty", "BUNTY", -100, 0, 1, 4.0],
 		["go", "bunty", 400, 0, 1.0],
 		["title", "THUNDER HEIGHTS", "WORLD 4", 2.0],
@@ -112,7 +112,7 @@ const SCENES := {
 		["sfx", "dash", 1.0], ["go", "bunty", 1400, 0, 0.8],
 	],
 	"world5": [
-		["bg", "castle"], ["music", "night", 0.9],
+		["bg", "castle"], ["music", "castle", 1.0],
 		["add", "bunty", "BUNTY", -100, 0, 1, 4.0],
 		["go", "bunty", 380, 0, 1.0],
 		["title", "KING'S CASTLE", "WORLD 5", 2.0],

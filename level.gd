@@ -35,6 +35,7 @@ var theme := "grass"
 var slippery := false
 var title := ""
 var uses_gems := false
+var no_coins := false       # Bootcamp after its first clear: no coins at all, so it can't be farmed
 var done := false
 var done_building := false
 var cinematic := false      # a cutscene is playing inside the level
@@ -139,6 +140,7 @@ func _ready() -> void:
 		Game.Mode.TUTORIAL:
 			title = "BOOTCAMP"
 			sub = "MISS BEAR'S"
+			no_coins = Game.seen("tutorial")
 			for step in Levels.TUTORIAL:
 				chunks.append(step[0])
 		Game.Mode.STORY:
@@ -355,13 +357,14 @@ func place_chunk(chunk: String, x0: int, id: int) -> int:
 					if r == n - 1 and (row.substr(maxi(c - 1, 0), 3).contains("~")):
 						_add_liquid(x0 + c)
 				"o":
-					_add_pickup(cell, "coin")
+					if not no_coins:
+						_add_pickup(cell, "coin")
 				"g":
 					if Game.mode == Game.Mode.TIME_TRIAL:
 						_add_pickup(cell, "clock")
 					elif uses_gems and gem_spots in gem_keep:
 						_add_pickup(cell, "gem", gem_keep.find(gem_spots))
-					else:
+					elif not no_coins:
 						_add_pickup(cell, "coin")
 					gem_spots += 1
 				"h":
@@ -1150,6 +1153,8 @@ func _break_crate(cell: Vector2i, dir: int) -> void:
 	Fx.play(self, "hit", at, {"z": 8})
 	Fx.burst(self, at, 12, Color(0.78, 0.55, 0.36), 220.0, Vector2(dir * 0.6, -1.0), 70.0, 600.0, 7.0, 0.6)
 	Game.sfx("break")
+	if no_coins:
+		return
 	for i in 2:
 		players[0].coins += 1
 		var coin := _sprite(151)
@@ -1170,7 +1175,7 @@ func mushroom_bounced(_body: Node, at: Vector2) -> void:
 
 func enemy_died(e: Node2D) -> void:
 	kills += 1
-	if not e.minion:
+	if not e.minion and not no_coins:
 		players[0].coins += 1
 		_float_text(e.center(), "+1", Color(1.0, 0.9, 0.3))
 
@@ -1637,6 +1642,7 @@ func _trial(delta: float) -> void:
 		var z: int = zone_marks.pop_front()[1]
 		trial_left += 12.0
 		_apply_look(Levels.TRIAL_THEMES[z])
+		Game.music(Levels.WORLDS[z]["music"], 1.12)   # each zone plays its own world's song
 		slippery = Levels.THEMES[Levels.TRIAL_THEMES[z]].get("slippery", false)
 		hud.flash(Color(1, 1, 1, 0.6), 0.5)
 		show_message("ZONE %d: %s\n+12 SEC" % [z + 1, Levels.TRIAL_ZONES[z]], 2.0)
